@@ -36,11 +36,8 @@ public class DialogStateMachineConfiguration extends StateMachineConfigurerAdapt
         states
             .withStates()
             .initial(DialogState.EXPECT_ANY_INPUT)
-            .junction(DialogState.EXPECT_ANY_INPUT)
             .state(DialogState.EXPECT_CONFIRMATION)
-            .junction(DialogState.EXPECT_CONFIRMATION)
             .state(DialogState.EXPECT_SLOT)
-            .junction(DialogState.EXPECT_SLOT)
             .end(DialogState.FINISHED);
     }
 
@@ -114,6 +111,13 @@ public class DialogStateMachineConfiguration extends StateMachineConfigurerAdapt
     }
 
     @Bean
+    public Guard<DialogState, DialogEvent> intentPredictedWithNoSlotsToFill() {
+        return ctx -> (int) ctx.getExtendedState()
+            .getVariables()
+            .getOrDefault("slotsToFill", 0) > 0;
+    }
+
+    @Bean
     public Guard<DialogState, DialogEvent> intentPredictedWithSlotsToFill() {
         return ctx -> (int) ctx.getExtendedState()
             .getVariables()
@@ -125,6 +129,13 @@ public class DialogStateMachineConfiguration extends StateMachineConfigurerAdapt
         return ctx -> (boolean) ctx.getExtendedState()
             .getVariables()
             .getOrDefault("slotValueUnderstood", false);
+    }
+
+    @Bean
+    public Guard<DialogState, DialogEvent> isNotUnderstood() {
+        return ctx -> (boolean) ctx.getExtendedState()
+            .getVariables()
+            .getOrDefault("understood", false);
     }
 
 }
