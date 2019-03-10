@@ -1,8 +1,11 @@
 package ie.textability.dialog.state;
 
 public enum DialogState {
-    EXPECT_ANY_INPUT,
-    EXPECT_CONFIRMATION,
-    EXPECT_SLOT,
+    ANY_INPUT,
+    EVALUATE_INPUT,
+    ASK_CONFIRMATION,
+    EVALUATE_CONFIRMATION,
+    SLOT_FILLING,
+    EVALUATE_SLOT,
     FINISHED
 }
