@@ -1,6 +1,6 @@
-package ie.textability.dialog.conversation;
+package ie.textability.conversation;
 
-public interface ConversationStorage {
+public interface ConversationRepositoryCustom {
 
     Conversation findOne(String id);
 
